@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <main class="stage">
+    <p class="eyebrow">a little something for you</p>
+    <h1 class="headline">Happy Birthday<span class="dot">!</span></h1>
+    <p class="subline">Make a wish, then blow out the candles.</p>
+
+    <div class="cake" id="cake">
+      <div class="candle" data-lit="true">
+        <span class="flame"></span>
+      </div>
+      <div class="candle" data-lit="true">
+        <span class="flame"></span>
+      </div>
+      <div class="candle" data-lit="true">
+        <span class="flame"></span>
+      </div>
+      <div class="tier tier-top">
+        <div class="icing"></div>
+      </div>
+      <div class="tier tier-bottom">
+        <div class="icing"></div>
+      </div>
+      <div class="plate"></div>
+    </div>
+
+    <p class="hint" id="hint">tap the cake to blow out the candles 🎂</p>
+
+    <div class="controls">
+      <button class="song-btn" id="songBtn">
+        <span id="songBtnLabel">▶ play the birthday song</span>
+      </button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
