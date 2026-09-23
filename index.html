@@ -3,49 +3,271 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday!</title>
+<title>這是什麽呀 💌</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <canvas id="confetti-canvas"></canvas>
+  <div class="ambient-stars" id="ambientStars" aria-hidden="true"></div>
+  <div class="ambient-clouds" id="ambientClouds" aria-hidden="true"></div>
+  <div class="ambient-balloons" id="ambientBalloons" aria-hidden="true"></div>
+  <canvas id="fx-canvas"></canvas>
 
-  <main class="stage">
-    <p class="eyebrow">a little something for you</p>
-    <h1 class="headline">Happy Birthday<span class="dot">!</span></h1>
-    <p class="subline">Make a wish, then blow out the candles.</p>
+  <!-- ================= LOCK SCREEN ================= -->
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-content">
+      <div class="lock-icon">🔒</div>
+      <p class="lock-title">Enter Passcode</p>
+      <p class="lock-sub" id="lockSub">hint：你的生日日期</p>
 
-    <div class="cake" id="cake">
-      <div class="candle" data-lit="true">
-        <span class="flame"></span>
+      <div class="lock-dots" id="lockDots">
+        <span class="lock-dot"></span>
+        <span class="lock-dot"></span>
+        <span class="lock-dot"></span>
+        <span class="lock-dot"></span>
       </div>
-      <div class="candle" data-lit="true">
-        <span class="flame"></span>
+
+      <div class="lock-keypad" id="lockKeypad">
+        <button type="button" class="key" data-key="1">1</button>
+        <button type="button" class="key" data-key="2">2</button>
+        <button type="button" class="key" data-key="3">3</button>
+        <button type="button" class="key" data-key="4">4</button>
+        <button type="button" class="key" data-key="5">5</button>
+        <button type="button" class="key" data-key="6">6</button>
+        <button type="button" class="key" data-key="7">7</button>
+        <button type="button" class="key" data-key="8">8</button>
+        <button type="button" class="key" data-key="9">9</button>
+        <div class="key key-spacer"></div>
+        <button type="button" class="key" data-key="0">0</button>
+        <button type="button" class="key key-del" id="keyDelete">⌫</button>
       </div>
-      <div class="candle" data-lit="true">
-        <span class="flame"></span>
-      </div>
-      <div class="tier tier-top">
-        <div class="icing"></div>
-      </div>
-      <div class="tier tier-bottom">
-        <div class="icing"></div>
-      </div>
-      <div class="plate"></div>
     </div>
+  </div>
 
-    <p class="hint" id="hint">tap the cake to blow out the candles 🎂</p>
+  <!-- ================= MAIN EXPERIENCE (scrolls after unlock) ================= -->
+  <main class="experience" id="experience">
 
-    <div class="controls">
-      <button class="song-btn" id="songBtn">
-        <span id="songBtnLabel">▶ play the birthday song</span>
+    <!-- ---- Hero: cake -> gift -> fireworks -> happy birthday + calendar ---- -->
+    <section class="stage stage-hero" id="stageHero">
+
+      <div class="hero-cake-wrap" id="heroCakeWrap">
+        <div class="cake" id="cake">
+          <div class="candle"><span class="flame"></span><span class="smoke-spot"></span></div>
+          <div class="candle"><span class="flame"></span><span class="smoke-spot"></span></div>
+          <div class="candle"><span class="flame"></span><span class="smoke-spot"></span></div>
+          <div class="tier tier-top"><div class="icing"></div></div>
+          <div class="tier tier-bottom">
+            <div class="icing"></div>
+            <div class="cake-name" id="cakeName">若文呀~ 生日快樂!</div>
+          </div>
+          <div class="plate"></div>
+        </div>
+
+        <div class="gift" id="gift" hidden>
+          <div class="gift-lid"></div>
+          <div class="gift-box"></div>
+          <div class="gift-ribbon-v"></div>
+          <div class="gift-ribbon-h"></div>
+          <div class="gift-bow"><span class="knot"></span></div>
+        </div>
+      </div>
+
+      <p class="hero-hint" id="heroHint">點一下蛋糕，把蠟燭吹熄 🕯️</p>
+
+      <div class="hero-reveal" id="heroReveal" hidden>
+        <h1 class="hero-title">Happy Birthday</h1>
+        <div class="mini-calendar" id="miniCalendar">
+          <p class="mini-calendar-month" id="calendarMonth">September</p>
+          <div class="mini-calendar-grid" id="calendarGrid"></div>
+          <p class="mini-calendar-hint">tap the 25th 💚</p>
+        </div>
+        <p class="scroll-cue">往下滑 ↓</p>
+      </div>
+    </section>
+
+    <!-- ---- Music (right below the calendar) ---- -->
+    <section class="stage reveal-on-scroll" id="stageMusic">
+      <p class="stage-eyebrow">選一首歌送給自己 🎵</p>
+      <h2 class="stage-title">A Playlist</h2>
+
+      <div class="song-list" id="songList">
+        <button type="button" class="song-row" data-song="0">
+          <span class="song-art">🎵</span>
+          <span class="song-info">
+            <span class="song-name">ลาลาลอย (100%)</span>
+            <span class="song-artist">The Toys</span>
+          </span>
+          <span class="song-play">▶</span>
+        </button>
+        <button type="button" class="song-row" data-song="1">
+          <span class="song-art">🎶</span>
+          <span class="song-info">
+            <span class="song-name">討厭紅樓夢</span>
+            <span class="song-artist">陶喆</span>
+          </span>
+          <span class="song-play">▶</span>
+        </button>
+        <button type="button" class="song-row" data-song="2">
+          <span class="song-art">🎶</span>
+          <span class="song-info">
+            <span class="song-name">昨夜風今宵月</span>
+            <span class="song-artist">庄淇珉29</span>
+          </span>
+          <span class="song-play">▶</span>
+        </button>
+      </div>
+
+      <audio id="audio0" src="audio/song1.mp3" preload="none"></audio>
+      <audio id="audio1" src="audio/song2.mp3" preload="none"></audio>
+      <audio id="audio2" src="audio/song3.mp3" preload="none"></audio>
+
+      <div class="player-bar" id="playerBar">
+        <span class="player-art" id="playerArt">🎵</span>
+        <span class="player-info">
+          <span class="player-name" id="playerName">Song title</span>
+          <span class="player-artist" id="playerArtist">Artist name</span>
+          <span class="player-progress-track"><span class="player-progress-fill" id="playerProgress"></span></span>
+        </span>
+        <button type="button" class="player-toggle" id="playerToggle">▶</button>
+      </div>
+    </section>
+
+    <!-- ---- Digital bouquet: real flower shapes drawn in CSS, no emoji ---- -->
+    <section class="stage reveal-on-scroll" id="stageBouquet">
+      <p class="stage-eyebrow">    for you !</p>
+      <h2 class="stage-title">一小束花</h2>
+
+      <div class="bouquet" id="bouquet">
+        <span class="bq-stem stem-1"><span class="bq-leaf leaf-1"></span></span>
+        <span class="bq-stem stem-2"><span class="bq-leaf leaf-2"></span></span>
+        <span class="bq-stem stem-3"><span class="bq-leaf leaf-3"></span></span>
+        <span class="bq-stem stem-4"></span>
+        <span class="bq-wrap"></span>
+
+        <!-- Peony -->
+        <div class="css-flower flower-peony" style="left:22px; top:24px;">
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="petal petal-inner"></span><span class="petal petal-inner"></span>
+          <span class="petal petal-inner"></span><span class="petal petal-inner"></span>
+          <span class="flower-center"></span>
+        </div>
+
+        <!-- Rose -->
+        <div class="css-flower flower-rose" style="left:102px; top:4px;">
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="petal petal-inner"></span><span class="petal petal-inner"></span>
+          <span class="petal petal-inner"></span>
+          <span class="flower-center"></span>
+        </div>
+
+        <!-- Sunflower -->
+        <div class="css-flower flower-sunflower" style="left:146px; top:36px;">
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="flower-center sunflower-center"></span>
+        </div>
+
+        <!-- Small rose accent -->
+        <div class="css-flower flower-rose flower-small" style="left:71px; top:87px;">
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+          <span class="flower-center"></span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ---- Letter: closed until tapped, unfolds open ---- -->
+    <section class="stage stage-compact reveal-on-scroll" id="stageLetter">
+      <p class="stage-eyebrow">a note</p>
+      <h2 class="stage-title">寫給你的信</h2>
+
+      <button type="button" class="letter-closed" id="letterClosed">
+        <span class="letter-closed-icon">💌</span>
+        <span class="letter-closed-text">tap to open</span>
       </button>
-    </div>
+
+      <div class="letter-fold-fx" id="letterFoldFx" hidden></div>
+
+      <div class="letter-card" id="letterOpen" hidden>
+        <p class="letter-body" id="letterBody">我最親愛的老師，生日快樂喔！🎂💚
+
+你最近上班還 OK 嗎？看起來你蠻忙的欸~ 不要忘記吃維他命喔，也要多喝水，一定要好好照顧自己~ 有空的時候也要出去玩一下喔！！
+
+在你之前的人生裡，你已經做了很多很棒的事情了。希望在新的一歲裡，也可以繼續做更多很棒的事情，好好享受這段人生，不要留下任何遺憾。
+
+你真的是最棒的，雖然你可能還是會說自己不夠好🥹
+
+我也不多說什麼了，我只希望你可以每天都開開心心的、一直健健康康的，我希望所有美好的事情都能來到你身邊。也希望這個世界，還有你身邊的人，都可以溫柔地對待你。如果有人欺負你、對你不好，我一定會幫你罵他！！😤
+
+好啦，就這樣吧！你要答應我，要開開心心地度過現在這個年紀的每一天喔！！
+
+永遠不要忘記，你是最棒的！！王若文老師永遠是最棒的！！！💚
+
+
+永遠最愛你的前學生,
+美玲</p>
+      </div>
+    </section>
+
+    <!-- ---- Make a wish (saved to Firebase) ---- -->
+    <section class="stage stage-compact reveal-on-scroll" id="stageWish">
+      <p class="stage-eyebrow">換你了</p>
+      <h2 class="stage-title">許個願吧</h2>
+      <p class="stage-sub">寫下此刻的心情，或任何你想對新一歲的自己說的話。這些文字只會留給你，之後再回來讀。</p>
+
+      <form id="wishForm" class="wish-form">
+        <textarea id="wishInput" rows="5" maxlength="2000" placeholder="My wish is..." required></textarea>
+        <span class="field-label">Pick a code (so you can open, edit, or delete this later)</span>
+        <input type="text" id="wishCodeInput" maxlength="20" placeholder="e.g. a word or a few numbers" required>
+        <button type="submit" class="btn-primary" id="wishSubmitBtn">保存我的願望 🔥</button>
+        <p class="form-note" id="wishNote"></p>
+      </form>
+
+      <p class="wish-repo-link"><a class="btn-link" href="my-wishes.html">📖 View / Edit My Past Wishes</a></p>
+    </section>
+
+    <!-- ---- Closing message, with a swaying grass horizon ---- -->
+    <section class="stage stage-compact stage-closing reveal-on-scroll" id="stageClosing">
+      <p class="closing-text" id="closingText">暫時就到這裡~ 但給你的祝福，永遠不會在這裡結束。願新的一歲，比上一歲更加明亮 🎉</p>
+
+      <button type="button" class="btn-primary btn-final" id="btnShowCard">🎂 One More Thing</button>
+
+      <div class="grass-field" aria-hidden="true"></div>
+    </section>
+
   </main>
 
-  <script src="script.js"></script>
+  <!-- ================= FLOATING CARD OVERLAY ================= -->
+  <div class="floating-overlay" id="floatingOverlay">
+    <div class="floating-card" id="floatingCard">
+      <p class="floating-cake">🎂</p>
+      <h3 class="floating-title">Happy Birthday!</h3>
+      <p class="floating-wish" id="floatingWish">願新的一歲，充滿溫柔的日子、開懷大笑的時光，還有你一直期待的美好</p>
+      <button type="button" class="btn-outline" id="btnRepeat">🔄 Repeat Animation</button>
+    </div>
+  </div>
+
+  <!-- ================= CALENDAR "25" REMINDER POPUP ================= -->
+  <div class="floating-overlay" id="reminderModal">
+    <div class="floating-card">
+      <p class="floating-cake">🎉</p>
+      <h3 class="floating-title">生日快樂!</h3>
+      <p class="floating-wish">今天一整天，都只屬於你 💚</p>
+      <button type="button" class="btn-outline" id="btnCloseReminder">Close</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
