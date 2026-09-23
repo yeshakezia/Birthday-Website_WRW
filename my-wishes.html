@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你的願望 📖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="ambient-stars" id="ambientStars" aria-hidden="true"></div>
+
+  <div class="app-simple">
+
+    <!-- ================= CODE ENTRY ================= -->
+    <section class="view active" id="viewCode">
+      <div class="panel">
+        <a class="btn-link" href="index.html#wish">← 回到首頁</a>
+        <p class="stage-eyebrow">專屬於你的小小收藏</p>
+        <h1 class="panel-title">你的願望</h1>
+        <p class="panel-sub">輸入你寫下願望時選擇的密碼，所有用這個密碼保存的願望都會顯示在下面。</p>
+
+        <form id="codeForm" class="wish-form">
+          <input type="text" id="codeInput" maxlength="20" placeholder="Your code" required>
+          <button type="submit" class="btn-primary">查看你的願望 📖</button>
+          <p class="form-note" id="codeError"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= LIST ================= -->
+    <section class="view" id="viewList">
+      <div class="panel">
+        <button type="button" class="btn-link" id="btnBackToCode">← Try a different code</button>
+        <a class="btn-link" href="index.html#wish" style="margin-left:10px;">🎂 回到首頁</a>
+        <h1 class="panel-title">你的願望</h1>
+        <p class="panel-sub">點一下信件，打開它 💌</p>
+        <div class="wish-list" id="wishList"></div>
+      </div>
+    </section>
+
+    <!-- ================= READ (opened letter) ================= -->
+    <section class="view" id="viewRead">
+      <div class="panel">
+        <button type="button" class="btn-link" id="btnBackToList">← 回到你寫願望的地方</button>
+        <div class="envelope-open-icon">💌</div>
+        <p class="detail-meta" id="readMeta"></p>
+        <div class="letter-card">
+          <p class="letter-body" id="readContent"></p>
+        </div>
+        <div class="detail-actions">
+          <button type="button" class="btn-outline" id="btnGoEdit">✏️ 編輯</button>
+          <button type="button" class="btn-outline btn-danger" id="btnGoDelete">🗑️ 刪除</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EDIT ================= -->
+    <section class="view" id="viewEdit">
+      <div class="panel">
+        <button type="button" class="btn-link" id="btnCancelEdit">← 取消</button>
+        <h1 class="panel-title">✏️ 編輯這個願望</h1>
+        <form id="editForm" class="wish-form">
+          <textarea id="editContent" rows="6" maxlength="2000" required></textarea>
+          <button type="submit" class="btn-primary">💾 保存修改</button>
+          <p class="form-note" id="editError"></p>
+        </form>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Delete confirmation -->
+  <div class="floating-overlay" id="deleteModal">
+    <div class="floating-card">
+      <h3 class="floating-title" style="font-size:1.2rem;">要刪除這個願望嗎？</h3>
+      <p class="floating-wish">此操作無法復原。</p>
+      <div class="detail-actions">
+        <button type="button" class="btn-outline" id="btnCancelDelete">Cancel</button>
+        <button type="button" class="btn-outline btn-danger" id="btnConfirmDelete">Yes, delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="my-wishes.js"></script>
+</body>
+</html>
