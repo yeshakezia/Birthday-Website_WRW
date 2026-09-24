@@ -827,7 +827,11 @@ h1, h2, h3 { font-family: 'Playfair Display', 'Noto Sans TC', serif; margin: 0; 
 
 /* ---------- Birthday song button (cake stage only) ---------- */
 .song-btn {
-  margin-top: 14px;
+  position: static;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin-top: 10px;
   font-family: 'Quicksand', sans-serif;
   font-weight: 700;
   font-size: 0.9rem;
